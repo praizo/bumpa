@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UserAchievementController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,6 +17,5 @@ Route::middleware('auth:sanctum')->group(function () {
         return $request->user();
     });
 
-    // We will add the Achievement routes here later
-    // Route::get('/users/{user}/achievements', ...);
+    Route::get('/users/{user}/achievements', [UserAchievementController::class, 'show']);
 });
