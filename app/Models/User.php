@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -44,5 +46,24 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function achievements(): BelongsToMany
+    {
+        return $this->belongsToMany(Achievement::class, 'achievement_user')
+            ->withPivot('unlocked_at')
+            ->withTimestamps();
+    }
+    public function badge(): BelongsTo
+    {
+        return $this->belongsTo(Badge::class, 'current_badge_id');
+    }
+    
+    public function nextBadge(): ?Badge
+    {
+        $currentPoints = $this->achievements->sum('points');
+        return Badge::where('points_required', '>', $currentPoints)
+            ->orderBy('points_required', 'asc')
+            ->first();
     }
 }
