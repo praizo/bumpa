@@ -34,8 +34,7 @@ class GamificationTest extends TestCase
         ]);
 
         // 2. Simulate Purchase via Service
-        // (We test the service directly to verify logic, or we could test a PurchaseController if we made one)
-        $service = app(GamificationService::class);
+         $service = app(GamificationService::class);
         $purchaseData = new PurchaseData(
             userId: $user->id,
             amount: 55000,

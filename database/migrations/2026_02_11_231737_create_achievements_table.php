@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description');
-            $table->string('icon_url')->nullable();
             $table->integer('points')->default(0);
             $table->timestamps();
         });
